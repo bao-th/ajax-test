@@ -1,0 +1,26 @@
+{
+  "name": "ajax-test",
+  "version": "1.0.0",
+  "description": "AJAX练习",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bao-th/ajax-test.git"
+  },
+  "keywords": [
+    "ajax、express"
+  ],
+  "author": "baoth",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bao-th/ajax-test/issues"
+  },
+  "homepage": "https://github.com/bao-th/ajax-test#readme"
+}

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // get请求
+      function get() {
+        // 1.创建对象
+        const xhr = new XMLHttpRequest();
+        // 2.初始化,设置请求方法和url
+        xhr.open("GET", "http://127.0.0.1:8000/server?a=100&&b=200");
+        // 3.发送
+        xhr.send();
+        // 4.事件绑定，处理服务返回的结构
+        // on when 当...的时候
+        // readystate 是xhr对象中的属性，表示状态0 1 2 3 4
+        // 0 - 未初始化
+        // 1 - open后
+        // 2 - send后
+        // 3 - 返回部分结果
+        // 4 - 返回全部结果
+        // change 改变
+        xhr.onreadystatechange = function () {
+          // 判断（服务器返回了所有结果）
+          if (xhr.readyState === 4) {
+            // 判断响应状态码200 404 403 401 500
+            // 2xx 成功
+            if (xhr.status >= 200 && xhr.status < 300) {
+              console.log(xhr.status); //状态码
+              console.log(xhr.statusText); //状态字符串
+              console.log(xhr.getAllResponseHeaders()); //所有响应头
+              console.log(xhr.response); //响应体
+            }
+          }
+        };
+      }
+      // 自定义请求头
+      function customHeaders() {
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://127.0.0.1:8000/server");
+        // 设置请求头
+        xhr.setRequestHeader(
+          "Content-type",
+          "application/x-www-form-urlencoded"
+        );
+        xhr.setRequestHeader("name", "xxx");
+        xhr.send();
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) {
+            if (xhr.status >= 200 && xhr.status < 300) {
+              console.log(xhr.response);
+            }
+          }
+        };
+      }
+      // post请求
+      function post() {
+        const xhr = new XMLHttpRequest();
+        xhr.responseType = "json"; //自动转换json
+        xhr.open("POST", "http://127.0.0.1:8000/json-server");
+        xhr.send("a=100&b=200&c=300");
+        // xhr.send('a:100&b:200&c:300');
+        // xhr.send('1234567');
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) {
+            if (xhr.status >= 200 && xhr.status < 300) {
+              // 手动转换json
+              console.log(JSON.parse(xhr.response));
+              // 自动转换json
+              console.log(xhr.response);
+            }
+          }
+        };
+      }
+      // IE缓存
+      function IE() {
+        const xhr = new XMLHttpRequest();
+        xhr.responseType = "json"; //自动转换json
+        xhr.open("GET", "http://127.0.0.1:8000/ie?t=" + Date.now());
+        xhr.send();
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) {
+            if (xhr.status >= 200 && xhr.status < 300) {
+              // 手动转换json
+              console.log(JSON.parse(xhr.response));
+              // 自动转换json
+              console.log(xhr.response);
+            }
+          }
+        };
+      }
+      // 延时
+      function delay() {
+        const xhr = new XMLHttpRequest();
+        // 设置超时时间 2s
+        xhr.timeout = 2000;
+        // 超时回调
+        xhr.ontimeout = function () {
+          alert("网络超时，请稍后重试！");
+        };
+        xhr.onerror = function () {
+          alert("网络异常，请稍后重试！");
+        };
+        xhr.open("GET", "http://127.0.0.1:8000/delay");
+        xhr.send();
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) {
+            if (xhr.status >= 200 && xhr.status < 300) {
+              console.log(xhr.response);
+            }
+          }
+        };
+      }
+      // 取消请求
+      function abort() {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", "http://127.0.0.1:8000/delay");
+        xhr.send();
+        xhr.abort();
+      }
+
+      delay();
+    </script>
+  </body>
+</html>
